@@ -25,64 +25,46 @@ namespace PCApp
         public LoginScreen()
         {
             InitializeComponent();
+
+            ApiHelper.InitializeClient();
         }
-        
-        private void btn_Login(object sender, RoutedEventArgs e)
+
+        private async Task<UserModel> LoadUsers(string userName, string Password)
         {
-            //Creating a object of SqlConnection and pass in the address of database
-            SqlConnection SQL_Con = new SqlConnection(@"Data Source=ONURKANMSI; Initial Catalog=Project_Integration; Integrated Security=True;");
-            
-            //Try to connect to the database
-            try
+            UserModel user = await UserProcessor.LoadUser(userName, Password);
+
+            if (user.state == "true")
             {
-                //if the connection to the database is closed then open it
-                if(SQL_Con.State == ConnectionState.Closed)
-                {
-                    SQL_Con.Open();
-                }
+                Console.WriteLine(user.id_user);
+                Console.WriteLine("`log screen");
 
-                //string for storing our query
-                String query = "SELECT COUNT(1) FROM UserTable WHERE Username=@Username AND Password=@Password";
-                SqlCommand sqlCmd = new SqlCommand(query, SQL_Con);
-                sqlCmd.CommandType = CommandType.Text;
-                //passing in the username and the password
-                sqlCmd.Parameters.AddWithValue("@Username", txtUsername.Text);
-                sqlCmd.Parameters.AddWithValue("@Password", txtPassword.Password);
-
-                //ExecuteScalar returns first row first column so we will ge the count and convert it to Int32
-                int check = Convert.ToInt32(sqlCmd.ExecuteScalar());
-
-                //if check returns 1, then open the mainwindow of the application
-                if(check == 1)
-                {
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
-
-                    //closing the login window
-                    this.Close();
-                }
-                else
-                {
-                    //if check returns 0 then credentials are incorrect
-                    MessageBox.Show("Username does not exist or password is wrong!");
-                }
+                MainWindow mainWindow = new MainWindow(user.id_user);
+                mainWindow.Show();
+                //closing the login window
+                this.Close();
+            }
+            else
+            {
+                //if check returns 0 then credentials are incorrect
+                MessageBox.Show("Username does not exist or password is wrong!");
 
             }
-            catch(Exception ex)
-            {
-                //display an exception message if it runs into a problem
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                //closing the connection at the end
-                SQL_Con.Close();
-            }
+            return user;
+        }
+
+        private async void btn_Login(object sender, RoutedEventArgs e)
+        {
+            UserModel user = new UserModel();
+            Task<UserModel> userTask = LoadUsers(txtUsername.Text, txtPassword.Password);
+            //LoadUsers(txtUsername.Text, txtPassword.Password);
+            user = await userTask;
+
         }
 
         private void btn_Quit(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }
+
     }
 }

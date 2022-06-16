@@ -13,8 +13,8 @@
         <Button  x:Name="btnDatabaseData" Click="btnDatabaseData_Click" Background="Aqua" Foreground="Black" FontWeight="Bold" Margin="150 0 0 0" Height="75" Width="150" Content="Database data"/>
         <Button  x:Name="btnSDCardData" Click="btnSDCardData_Click" Background="Aqua" Foreground="Black" FontWeight="Bold" Margin="20 0 0 0" Height="75" Width="150" Content="SD-Card data"/>
         <Button  x:Name="btnRealtimeData" Click="btnRealtimeData_Click" Background="Aqua" Foreground="Black" FontWeight="Bold" Margin="20 0 0 0" Height="75" Width="150" Content="Real Time data"/>
-        <TextBlock Margin="-420 135 0 0" FontWeight="Bold" FontSize="20" Text="Choose which data you want to display"/>
-        
+        <TextBlock Margin="-420 135 0 275" FontWeight="Bold" FontSize="20" Text="Choose which data you want to display"/>
+
     </StackPanel>
 
 </Window>

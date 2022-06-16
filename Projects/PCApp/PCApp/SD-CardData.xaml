@@ -7,6 +7,23 @@
         mc:Ignorable="d"
         Title="SD_CardData" Height="450" Width="800">
     <Grid>
-        
+        <DataGrid x:Name="dataGrid" d:ItemsSource="{Binding}" Margin="0,155,0,0" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding id}" Header="User ID"/>
+                <DataGridTextColumn Binding="{Binding heartrate}" Header="Heart rate"/>
+                <DataGridTextColumn Binding="{Binding oxygen}" Header="Oxygen"/>
+                <DataGridTextColumn Binding="{Binding latitude}" Header="Latitude"/>
+                <DataGridTextColumn Binding="{Binding longitude}" Header="Longitude"/>
+                <DataGridTextColumn Binding="{Binding emergency}" Header="Emergency"/>
+                <DataGridTextColumn Binding="{Binding date}" Header="Date"/>
+                <DataGridTextColumn Binding="{Binding time}" Header="Time"/>
+
+            </DataGrid.Columns>
+        </DataGrid>
+
+        <ListBox x:Name="listBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="506,10,10,311" SelectionChanged="listBox_SelectionChanged"/>
+        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="201" Height="29"/>
+        <Button x:Name="button" Content="Load" HorizontalAlignment="Left" Margin="228,10,0,0" VerticalAlignment="Top" Height="29" Width="63" Click="button_Click"/>
+
     </Grid>
 </Window>

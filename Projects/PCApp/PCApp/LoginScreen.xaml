@@ -14,7 +14,7 @@
         <materialDesign:DialogHost CloseOnClickAway="True" x:Name="DialogHost">
             <StackPanel>
 
-                <Image Margin="0 60 0 5" Source="CareBears.png" Height="100"/>
+                <Image Margin="0 60 0 5" Source="/Images/CareBears.png" Height="100"/>
 
                 <Button x:Name="btnQuit" Style="{StaticResource MaterialDesignFlatMidBgButton}" Margin="0 -285 0 5"
                         HorizontalAlignment="Right" Content="Quit" FontSize="15" Height="35" Width="60" Click="btn_Quit"/>

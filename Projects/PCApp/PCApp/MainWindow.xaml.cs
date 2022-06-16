@@ -14,6 +14,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using PCApp.API;
+//using PCApp.API_Handling;
 
 namespace PCApp
 {
@@ -22,14 +24,53 @@ namespace PCApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        public int user_id { get; set; }
+        public MainWindow(int user_id)
         {
+            this.user_id = user_id;
+
             InitializeComponent();
+
         }
 
-        private void btnDatabaseData_Click(object sender, RoutedEventArgs e)
+        
+        
+        private async Task<List<DataModel>> LoadDatas(int user_id)
         {
-            DatabaseData databaseData = new DatabaseData();
+            Console.WriteLine(user_id);
+            List<DataModel> data = await DataProcessor.LoadData(user_id);
+            //UserModel user = new UserModel();
+
+            //userID = user.id_user;
+
+            //if (user_id == )
+            //{
+                /*DatabaseData databaseDataWindow = new DatabaseData(data);
+                databaseDataWindow.Show();*/
+
+                //closing the mainwindow
+                //this.Close();
+            //}
+            
+            return data;
+        
+        }
+
+        private async void btnDatabaseData_Click(object sender, RoutedEventArgs e)
+        {
+           // DataModel data = new DataModel();
+            //UserModel user = new UserModel();
+            List<DataModel> dlist;
+
+            //Session["user_ID"] = user.id_user;
+
+            //int userID = 0;
+
+            Task<List<DataModel>> dataTask = LoadDatas(user_id);
+            
+            dlist = await dataTask;
+
+            DatabaseData databaseData = new DatabaseData(dlist);
             databaseData.Show();
 
             this.Close();
@@ -43,10 +84,22 @@ namespace PCApp
             this.Close();
         }
 
-        private void btnRealtimeData_Click(object sender, RoutedEventArgs e)
+        private async void btnRealtimeData_Click(object sender, RoutedEventArgs e)
         {
-            RealTimeData realtimeData = new RealTimeData();
-            realtimeData.Show();
+            // DataModel data = new DataModel();
+            //UserModel user = new UserModel();
+            List<DataModel> dlist;
+
+            //Session["user_ID"] = user.id_user;
+
+            //int userID = 0;
+
+            Task<List<DataModel>> dataTask = LoadDatas(user_id);
+
+            dlist = await dataTask;
+
+            DatabaseData databaseData = new DatabaseData(dlist);
+            databaseData.Show();
 
             this.Close();
         }

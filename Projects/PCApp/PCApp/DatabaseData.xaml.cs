@@ -13,51 +13,301 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using LiveCharts;
+using LiveCharts.Wpf;
+using System.Configuration;
+using System.Net.Http;
+using PCApp.API_Handling;
 
 namespace PCApp
 {
     /// <summary>
     /// Interaction logic for DatabaseData.xaml
     /// </summary>
+    /// 
     public partial class DatabaseData : Window
     {
-        public DatabaseData()
+        
+        List<DataModel> dmodel_list { get; set; }
+        public DatabaseData(List<DataModel> dmodel_list)
         {
             InitializeComponent();
 
-            Connect_database();
+            ApiHelper.InitializeClient();
+
+            this.dmodel_list = dmodel_list;
+            LineChart();
+            GPSCoordinates();
+
+
         }
 
-        public void Connect_database()
+        public SeriesCollection SeriesCollection { get; set; }
+        public string[] Labels { get; set; }
+        public Func<double, string> YFormatter { get; set; }
+
+        private void LineChart()
         {
-            SqlConnection SQL_Con = new SqlConnection(@"Data Source=ONURKANMSI; Initial Catalog=Project_Integration; Integrated Security=True;");
+            //creating double lists for Heartbeat and oxygenlevel data
+            List<double> HeartbeatValues = new List<double>();
+            List<double> OxygenLevelValues = new List<double>();
+            List<string> dateLabels = new List<string>();
+            List<string> timeLabels = new List<string>();
+            List<double> gps_long = new List<double>();
+            List<double> gps_lang = new List<double>();
+            List<int> emergency = new List<int>();
 
-            try
+            foreach (DataModel dmodel in dmodel_list)
             {
-                //if the connection to the database is closed then open it
-                if (SQL_Con.State == ConnectionState.Closed)
+                HeartbeatValues.Add(dmodel.heart_rate);
+                OxygenLevelValues.Add(dmodel.oxygen_level);
+                dateLabels.Add(dmodel.date.ToString());
+                timeLabels.Add(dmodel.time.ToString());
+                gps_long.Add(dmodel.gps_longitude);
+                gps_lang.Add(dmodel.gps_latitude);
+                emergency.Add(dmodel.emergency);
+            }
+
+            SeriesCollection = new SeriesCollection
+            {
+                new LineSeries()
                 {
-                    SQL_Con.Open();
-                }
+                    Title = "HeartbeatData",
+                    Values = new ChartValues<double>(HeartbeatValues)
+                },
 
-                //string for storing our query
-                String query = "SELECT COUNT(1) FROM GraphData WHERE Heartbeat=@Heartbeat AND Oxygen_level=@OxygenLevel";
-                SqlCommand sqlCmd = new SqlCommand(query, SQL_Con);
-                sqlCmd.CommandType = CommandType.Text;
-                //passing in the Heartbeat and the Oxygen level
-                //sqlCmd.Parameters.AddWithValue("@Heartbeat", txtUsername.Text);
-                //sqlCmd.Parameters.AddWithValue("@OxygenLevel", txtPassword.Password);
-            }
-            catch (Exception ex)
+                new LineSeries()
+                {
+                    Title = "OxygenLevelData",
+                    Values = new ChartValues<double>(OxygenLevelValues),
+                    PointGeometry = null
+                },
+
+                new LineSeries()
+                {
+                    Title = "gps long",
+                    Values= new ChartValues<double>(gps_long),
+                    //Visibility = Visibility.Hidden
+                },
+
+                new LineSeries()
+                {
+                    Title = "gps lang",
+                    Values= new ChartValues<double>(gps_lang),
+                    //Visibility = Visibility.Hidden
+
+                },
+
+                new LineSeries()
+                {
+                    Title = "emergency",
+                    Values= new ChartValues<int>(emergency),
+                    //Visibility = Visibility.Hidden
+
+                }
+            };
+
+           
+            //converting the string list into an array
+            //var myArray = dateLabels.ToArray();
+            var timeArray = timeLabels.ToArray();
+            //setting the label as our newly created array
+            Labels = timeArray;
+
+            DataContext = this;
+        }
+
+        public LineSeries gps_long { get; set; }
+        public LineSeries gps_lang { get; set; }
+        public LineSeries emergency { get; set; }
+
+        public double[] myArray { get; set; }
+        
+        private void GPSCoordinates()
+        {
+            //base.DataContext = dmodel_list[0];
+
+           /* base.DataContext = new DataModel[]
             {
-                //display an exception message if it runs into a problem
-                MessageBox.Show(ex.Message);
-            }
-            finally
+                /*new DataModel
+                {
+                    gps_longitude = 54645464645L,
+                    gps_latitude = 7888456542L,
+                    emergency = 1,
+                },
+                new DataModel
+                {
+                    gps_longitude = 34645264645L,
+                    gps_latitude = 2888416542L,
+                    emergency = 0,
+                },
+                new DataModel
+                {
+                    gps_longitude = 14675464645L,
+                    gps_latitude = 2888486542L,
+                    emergency = 1,
+                }
+            };*/
+        }
+
+        /*private async Task<DataModel> LoadDates(int userID, DateTime date)
+        {
+            //DataModel data = await DateProcessor.LoadDate(userID, date);
+
+            
+   
+
+            
+            //return data;
+        }*/
+
+        private async Task<List<DataModel>> LoadDates(int user_id,DateTime datePicker)
+        {
+
+            List<DataModel> dates = await DateProcessor.LoadDate(user_id, datePicker);
+
+            
+
+ 
+
+            return dates;
+                
+        }
+
+        private void Date_Picker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            DateTime datePicker = (DateTime)((DatePicker)sender).SelectedDate;
+            
+            Task<List<DataModel>> dateTask = LoadDates(dmodel_list[0].id_user, datePicker);
+
+            //creating double lists for Heartbeat and oxygenlevel data
+            List<double> HeartbeatValues = new List<double>();
+            List<double> OxygenLevelValues = new List<double>();
+            List<string> dateLabels = new List<string>();
+            List<string> timeLabels = new List<string>();
+            List<double> gps_long = new List<double>();
+            List<double> gps_lang = new List<double>();
+            List<int> emergency = new List<int>();
+
+            foreach (DataModel dmodel in dateTask.Result)
             {
-                //closing the connection at the end
-                SQL_Con.Close();
+                HeartbeatValues.Add(dmodel.heart_rate);
+                OxygenLevelValues.Add(dmodel.oxygen_level);
+                dateLabels.Add(dmodel.date.ToString());
+                timeLabels.Add(dmodel.time.ToString());
+                gps_long.Add(dmodel.gps_longitude);
+                gps_lang.Add(dmodel.gps_latitude);
+                emergency.Add(dmodel.emergency);
             }
+
+            /*
+            SeriesCollection = new SeriesCollection
+            {
+                new LineSeries()
+                {
+                    Title = "HeartbeatData",
+                    Values = new ChartValues<double>(HeartbeatValues)
+                },
+
+                new LineSeries()
+                {
+                    Title = "OxygenLevelData",
+                    Values = new ChartValues<double>(OxygenLevelValues),
+                    PointGeometry = null
+                },
+
+                new LineSeries()
+                {
+                    Title = "gps long",
+                    Values= new ChartValues<double>(gps_long),
+                    //Visibility = Visibility.Hidden
+                },
+
+                new LineSeries()
+                {
+                    Title = "gps lang",
+                    Values= new ChartValues<double>(gps_lang),
+                    //Visibility = Visibility.Hidden
+
+                },
+
+                new LineSeries()
+                {
+                    Title = "emergency",
+                    Values= new ChartValues<int>(emergency),
+                    //Visibility = Visibility.Hidden
+
+                }
+            };*/
+
+            var workchart = new CartesianChart
+            {
+                Series = new SeriesCollection()
+                {
+                    new LineSeries()
+                {
+                    Title = "HeartbeatData",
+                    Values = new ChartValues<double>(HeartbeatValues)
+                },
+
+                new LineSeries()
+                {
+                    Title = "OxygenLevelData",
+                    Values = new ChartValues<double>(OxygenLevelValues),
+                    PointGeometry = null
+                },
+
+                new LineSeries()
+                {
+                    Title = "gps long",
+                    Values= new ChartValues<double>(gps_long),
+                    //Visibility = Visibility.Hidden
+                },
+
+                new LineSeries()
+                {
+                    Title = "gps lang",
+                    Values= new ChartValues<double>(gps_lang),
+                    //Visibility = Visibility.Hidden
+
+                },
+
+                new LineSeries()
+                {
+                    Title = "emergency",
+                    Values= new ChartValues<int>(emergency),
+                    //Visibility = Visibility.Hidden
+
+                }
+                }
+            };
+
+
+
+            
+                
+            
+
+
+            
+            
+            var timeArray = timeLabels.ToArray();
+            //setting the label as our newly created array
+            Labels = timeArray;
+
+            DataContext = this;
+
+            workchart.Update();
+        }
+
+        private void btn_Logout(object sender, RoutedEventArgs e)
+        {
+
+            LoginScreen login = new LoginScreen();
+            login.Show();
+
+            this.Close();
         }
     }
 }

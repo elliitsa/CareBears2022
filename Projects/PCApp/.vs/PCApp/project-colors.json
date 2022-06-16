@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "8a18e755-9d70-4778-80d2-cba952fdeb5c": {
+      "ProjectGuid": "8a18e755-9d70-4778-80d2-cba952fdeb5c",
+      "DisplayName": "PCApp",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}

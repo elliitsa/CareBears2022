@@ -4,9 +4,44 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PCApp"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Background="WhiteSmoke"
         mc:Ignorable="d"
+        
         Title="RealTimeData" Height="450" Width="800">
     <Grid>
-        
+
+        <lvc:CartesianChart Name="workchart" Series="{Binding SeriesCollection}" LegendLocation="Left" Margin="0 0 0 0" Height="250" Width="550">
+            <lvc:CartesianChart.AxisX>
+                <lvc:Axis Title="X" Labels="{Binding Labels}"></lvc:Axis>
+            </lvc:CartesianChart.AxisX>
+
+            <lvc:CartesianChart.AxisY>
+                <lvc:Axis Title="Y" LabelFormatter="{Binding YFormatter}"></lvc:Axis>
+            </lvc:CartesianChart.AxisY>
+        </lvc:CartesianChart>
+
+        <ItemsControl ItemsSource="{Binding Path=.}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Margin="0 50 0 50">
+                        <TextBlock FontWeight="Bold" Text="GPS Longitude: "></TextBlock>
+                        <TextBlock Text="{Binding gps_longitude}" />
+                        <TextBlock FontWeight="Bold" Text=", GPS Latitude: " />
+                        <TextBlock Text="{Binding gps_latitude}" />
+                        <TextBlock FontWeight="Bold" Text=", UserTripped: " />
+                        <TextBlock Text="{Binding emergency}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <DatePicker Name="DatePicker" Width="200" Margin="0, 325, 0, 0" SelectedDateChanged="Date_Picker_SelectedDateChanged"
+                    SelectedDate="{Binding DateChoosed, Mode=TwoWay}"></DatePicker>
+
+
+        <Button Margin="700 0 0 375" x:Name="btnLogout" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
+                        materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Logout" Click="btn_Logout"/>
     </Grid>
 </Window>
