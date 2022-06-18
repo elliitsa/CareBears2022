@@ -11,9 +11,12 @@
 
     <StackPanel Orientation="Horizontal">
         <Button  x:Name="btnDatabaseData" Click="btnDatabaseData_Click" Background="Aqua" Foreground="Black" FontWeight="Bold" Margin="150 0 0 0" Height="75" Width="150" Content="Database data"/>
-        <Button  x:Name="btnSDCardData" Click="btnSDCardData_Click" Background="Aqua" Foreground="Black" FontWeight="Bold" Margin="20 0 0 0" Height="75" Width="150" Content="SD-Card data"/>
         <Button  x:Name="btnRealtimeData" Click="btnRealtimeData_Click" Background="Aqua" Foreground="Black" FontWeight="Bold" Margin="20 0 0 0" Height="75" Width="150" Content="Real Time data"/>
-        <TextBlock Margin="-420 135 0 275" FontWeight="Bold" FontSize="20" Text="Choose which data you want to display"/>
+        <Button  x:Name="btnSDCardData" Click="btnSDCardData_Click" Background="Aqua" Foreground="Black" FontWeight="Bold" Margin="20 0 0 0" Height="75" Width="150" Content="SD-Card data"/>
+        <TextBlock Margin="-420 135 0 250" FontWeight="Bold" FontSize="20" Text="What kind of data would you like to see?"/>
+        <Button Margin="70 0 0 375" x:Name="btnLogout" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
+                        materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Logout" Click="btn_Logout"/>
 
     </StackPanel>
 

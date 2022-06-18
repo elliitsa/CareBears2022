@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PCApp"
         mc:Ignorable="d"
-        Title="SD_CardData" Height="450" Width="800">
+        Title="SD-CardData" Height="450" Width="800">
     <Grid>
         <DataGrid x:Name="dataGrid" d:ItemsSource="{Binding}" Margin="0,155,0,0" AutoGenerateColumns="False">
             <DataGrid.Columns>
