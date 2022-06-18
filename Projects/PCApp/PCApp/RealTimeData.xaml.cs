@@ -47,11 +47,11 @@ namespace PCApp
         private void Realtimer()
         {
             //ininitialising the timer and starts the timer
-            dispatcherTimer = new System.Windows.Threading.DispatcherTimer();
+            dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
-            wdw.Title = "updating";
+            wdw.Title = "Updating data counter: ";
         }
         public int count = 0;
         private async Task<List<DataModel>> LoadDates(int user_id)
@@ -75,6 +75,7 @@ namespace PCApp
 
             // Forcing the CommandManager to raise the RequerySuggested event
             CommandManager.InvalidateRequerySuggested();
+
         }
 
         //creating a task with a type of list datamodel called LoadDates with the logged in user id and date selected from date picker
@@ -82,21 +83,28 @@ namespace PCApp
         
         public void updateRealtimer()
         {
-            wdw.Title = "Realtime Data "+ count.ToString();
+            wdw.Title = "Realtime data update count: " + count.ToString();
             
-                //if there is an emergency display a messagebox saying emergency is on the way
-                string emergencytext = "Emergency at: ";
-                if (dmodel_list[dmodel_list.Count-1].emergency == 1)
-                {
-                    MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel_list[dmodel_list.Count-1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count-1].gps_latitude.ToString()}");
-                }
-            heart_rate.Text = "Heart Rate: " + dmodel_list[dmodel_list.Count - 1].heart_rate.ToString() + " " + " Updated times: " + count.ToString();
+            //if there is an emergency display a messagebox saying emergency is on the way
+            string emergencytext = "Emergency at: ";
+            string usertripped = "User fell down, Help is coming to help the user get up...";
+            if (dmodel_list[dmodel_list.Count-1].emergency == 1)
+            {
+                MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel_list[dmodel_list.Count-1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count-1].gps_latitude.ToString()}");
+            }
+            if (dmodel_list[dmodel_list.Count - 1].emergency == 2)
+            {
+                MessageBox.Show($"{usertripped}  GPS_Long: {dmodel_list[dmodel_list.Count - 1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count - 1].gps_latitude.ToString()}");
+            }
+
+            heart_rate.Text = "Heart Rate: " + dmodel_list[dmodel_list.Count - 1].heart_rate.ToString();
             oxygen_level.Text = "Oxygen Level: " + dmodel_list[dmodel_list.Count - 1].oxygen_level.ToString();
             gps1.Text= "GPS Longtitude: " + dmodel_list[dmodel_list.Count-1].gps_longitude.ToString();
             gps2.Text = "GPS Latitude: " + dmodel_list[dmodel_list.Count-1].gps_latitude.ToString();
             emerg.Text = "Emergency: " + dmodel_list[dmodel_list.Count-1].emergency.ToString();
             date.Text = "Date: " + dmodel_list[dmodel_list.Count - 1].date.ToString();
             time.Text = "Time: " + dmodel_list[dmodel_list.Count - 1].time.ToString();
+            updateCount.Text = "Data Updated Counter: " + count.ToString();
         }
 
         //function executes whhen back button is pressed

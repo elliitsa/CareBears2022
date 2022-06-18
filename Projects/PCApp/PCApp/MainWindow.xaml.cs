@@ -59,8 +59,9 @@ namespace PCApp
         //function executes when the SDCard data button is pressed
         private void btnSDCardData_Click(object sender, RoutedEventArgs e)
         {
+            
             //creating a new instance of sdcardData screen and display it
-            SD_CardData sdcardData = new SD_CardData();
+            SD_CardData sdcardData = new SD_CardData(user_id);
             sdcardData.Show();
             //close the MainWindow screen
             this.Close();

@@ -93,9 +93,14 @@ namespace PCApp
 
                     //if there is an emergency display a messagebox saying emergency is on the way
                     string emergencytext = "Emergency at: ";
+                    string usertripped = "User fell down, Help is coming to help the user get up...";
                     if (dmodel.emergency == 1)
                     {
                         MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel.gps_longitude.ToString()} GPS_Lang: {dmodel.gps_latitude.ToString()}");
+                    }
+                    if (dmodel.emergency == 2)
+                    {
+                        MessageBox.Show($"{usertripped}  GPS_Long: {dmodel.gps_longitude.ToString()} GPS_Lang: {dmodel.gps_latitude.ToString()}");
                     }
             }
 
@@ -242,10 +247,16 @@ namespace PCApp
 
                 //if there is an emergency display a messagebox saying emergency is on the way
                 string emergencytext = "Emergency at: ";
+                string usertripped = "User fell down, Help is coming to help the user get up...";
                 if (dmodel.emergency == 1)
                 {
                     MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel.gps_longitude.ToString()} GPS_Lang: {dmodel.gps_latitude.ToString()}");
                 }
+                if (dmodel.emergency == 2)
+                {
+                    MessageBox.Show($"{usertripped}  GPS_Long: {dmodel.gps_longitude.ToString()} GPS_Lang: {dmodel.gps_latitude.ToString()}");
+                }
+
             }
 
             SeriesCollection = new SeriesCollection

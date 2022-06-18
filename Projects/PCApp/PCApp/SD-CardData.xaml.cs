@@ -24,12 +24,15 @@ namespace PCApp
         List<Card> cards = new List<Card>();
         List<Record> records = new List<Record>();
         string drive_path = "";
+        public int user_id { get; set; }
 
-        public SD_CardData()
+        public SD_CardData(int user_id)
         {
             InitializeComponent();
             FindCards();
             init_cmb();
+
+            this.user_id = user_id;
         }
 
         void init_cmb()
@@ -200,6 +203,22 @@ namespace PCApp
             }
             dataGrid.Items.Refresh();
         }
+        private void btn_Back(object sender, RoutedEventArgs e)
+        {
+            
+            MainWindow mainWindow = new MainWindow(user_id);
+            mainWindow.Show();
 
+            this.Close();
+        }
+
+        private void btn_Logout(object sender, RoutedEventArgs e)
+        {
+            //creates a new instance of loginscreen and displays the loginscreen back
+            LoginScreen login = new LoginScreen();
+            login.Show();
+            //closes the DatabaseData window
+            this.Close();
+        }
     }
 }

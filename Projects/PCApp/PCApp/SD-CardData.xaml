@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PCApp"
+        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" Background="WhiteSmoke"
         mc:Ignorable="d"
         Title="SD-CardData" Height="450" Width="800">
     <Grid>
@@ -24,6 +26,14 @@
         <ListBox x:Name="listBox" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="506,10,10,311" SelectionChanged="listBox_SelectionChanged"/>
         <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="201" Height="29"/>
         <Button x:Name="button" Content="Load" HorizontalAlignment="Left" Margin="228,10,0,0" VerticalAlignment="Top" Height="29" Width="63" Click="button_Click"/>
+
+        <Button Margin="700 0 0 375" x:Name="btnBack" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
+                        materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Back" Click="btn_Back"/>
+
+        <Button Margin="700 0 0 310" x:Name="btnLogout" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+                        materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
+                        materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Logout" Click="btn_Logout"/>
 
     </Grid>
 </Window>
