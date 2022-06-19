@@ -34,25 +34,34 @@ namespace PCApp
         {
             //new instance of UserModel calling LoadUser function in the UserProcessor class with passing the input given by the user
             UserModel user = await UserProcessor.LoadUser(userName, Password);
-            //if user exists
-            if (user.state == "true")
+            if(txtUsername.Text == userName && txtPassword.Password == Password)
             {
-                //write to the console the logged in user id
-                Console.WriteLine("User with following id entered: ");
-                Console.WriteLine(user.id_user);
-                //create a new instance of mainwindow and pass in the main window the logged in user id, & display the mainwindow
-                MainWindow mainWindow = new MainWindow(user.id_user);
-                mainWindow.Show();
+                if (user.state == "true")
+                {
+                    //write to the console the logged in user id
+                    Console.WriteLine("User with following id entered: ");
+                    Console.WriteLine(user.id_user);
+                    //create a new instance of mainwindow and pass in the main window the logged in user id, & display the mainwindow
+                    MainWindow mainWindow = new MainWindow(user.id_user);
+                    mainWindow.Show();
 
-                //closing the login window
-                this.Close();
+                    //closing the login window
+                    this.Close();
+                }
+                else
+                {
+                    //if user state is false that means user doesnt exist in database
+                    MessageBox.Show("User doesnt exist in thje database...");
+
+                }
             }
-            else
+            else 
             {
-                //if user state is false that means user doesnt exist in database
                 MessageBox.Show("Username and password does not exist or they are wrong!, Please try again...");
-
             }
+
+            //if user exists
+            
             return user;
         }
 
@@ -63,6 +72,7 @@ namespace PCApp
             //creating a task called userTask with a type of UserModel class for passing the credentials: username and password to the LoadUsers function
             Task<UserModel> userTask = LoadUsers(txtUsername.Text, txtPassword.Password);
             //setting the user to await the userTask
+            
             user = await userTask;
 
         }

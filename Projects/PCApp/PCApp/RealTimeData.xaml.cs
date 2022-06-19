@@ -79,29 +79,46 @@ namespace PCApp
         }
 
         //creating a task with a type of list datamodel called LoadDates with the logged in user id and date selected from date picker
-        
-        
+
+
+        bool btn_handled = false;
+        bool fall_handled = false;
+
         public void updateRealtimer()
         {
             wdw.Title = "Realtime data update count: " + count.ToString();
-            
+
             //if there is an emergency display a messagebox saying emergency is on the way
             string emergencytext = "Emergency at: ";
             string usertripped = "User fell down, Help is coming to help the user get up...";
-            if (dmodel_list[dmodel_list.Count-1].emergency == 1)
+            if (dmodel_list[dmodel_list.Count - 1].emergency == 1)
             {
-                MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel_list[dmodel_list.Count-1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count-1].gps_latitude.ToString()}");
+                if (!btn_handled)
+                {
+                    btn_handled = true;
+                    MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel_list[dmodel_list.Count - 1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count - 1].gps_latitude.ToString()}");
+                }
+
             }
             if (dmodel_list[dmodel_list.Count - 1].emergency == 2)
             {
-                MessageBox.Show($"{usertripped}  GPS_Long: {dmodel_list[dmodel_list.Count - 1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count - 1].gps_latitude.ToString()}");
+                if (!fall_handled)
+                {
+                    fall_handled = true;
+                    MessageBox.Show($"{usertripped}  GPS_Long: {dmodel_list[dmodel_list.Count - 1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count - 1].gps_latitude.ToString()}");
+                }
+            }
+            if (dmodel_list[dmodel_list.Count - 1].emergency == 0)
+            {
+                btn_handled = false;
+                fall_handled = false;
             }
 
             heart_rate.Text = "Heart Rate: " + dmodel_list[dmodel_list.Count - 1].heart_rate.ToString();
             oxygen_level.Text = "Oxygen Level: " + dmodel_list[dmodel_list.Count - 1].oxygen_level.ToString();
-            gps1.Text= "GPS Longtitude: " + dmodel_list[dmodel_list.Count-1].gps_longitude.ToString();
-            gps2.Text = "GPS Latitude: " + dmodel_list[dmodel_list.Count-1].gps_latitude.ToString();
-            emerg.Text = "Emergency: " + dmodel_list[dmodel_list.Count-1].emergency.ToString();
+            gps1.Text = "GPS Longtitude: " + dmodel_list[dmodel_list.Count - 1].gps_longitude.ToString();
+            gps2.Text = "GPS Latitude: " + dmodel_list[dmodel_list.Count - 1].gps_latitude.ToString();
+            emerg.Text = "Emergency: " + dmodel_list[dmodel_list.Count - 1].emergency.ToString();
             date.Text = "Date: " + dmodel_list[dmodel_list.Count - 1].date.ToString();
             time.Text = "Time: " + dmodel_list[dmodel_list.Count - 1].time.ToString();
             updateCount.Text = "Data Updated Counter: " + count.ToString();
@@ -112,7 +129,7 @@ namespace PCApp
         {
             MainWindow mainWindow = new MainWindow(dmodel_list[0].id_user);
             mainWindow.Show();
-
+            
             this.Close();
         }
 
