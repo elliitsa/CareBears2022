@@ -59,6 +59,7 @@ namespace PCApp
         public DateTime? SelectedDate1 { get; set; }
 
         DatePicker datePicker = new DatePicker(); 
+
         private void LineChart()
         {
             //creating a list of ObservableValues for storing our each sensor data with their types
@@ -70,6 +71,7 @@ namespace PCApp
             List<ObservableValue> GPS_lang = new List<ObservableValue>();
             List<ObservableValue> Emergency = new List<ObservableValue>();
             string blah;
+
 
             //creating a foreach loop with dmodel_list
             foreach (DataModel dmodel in dmodel_list)
@@ -91,17 +93,38 @@ namespace PCApp
                 //adding emergency data into Emergency list
                 Emergency.Add(new ObservableValue(dmodel.emergency));
 
-                    //if there is an emergency display a messagebox saying emergency is on the way
-                    string emergencytext = "Emergency at: ";
-                    string usertripped = "User fell down, Help is coming to help the user get up...";
-                    if (dmodel.emergency == 1)
+            }
+
+            //if there is an emergency display a messagebox saying emergency is on the way
+            bool btn_handled = false;
+            bool fall_handled = false;
+            string emergencytext = "Emergency at: ";
+            string usertripped = "User fell down, Help is coming to help the user get up...";
+
+            if (btn_handled == false || fall_handled == false)
+            {
+                if (dmodel_list[dmodel_list.Count - 1].emergency == 1)
+                {
+                    if (!btn_handled)
                     {
-                        MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel.gps_longitude.ToString()} GPS_Lang: {dmodel.gps_latitude.ToString()}");
+                        btn_handled = true;
+                        MessageBox.Show($"{emergencytext}  GPS_Long: {dmodel_list[dmodel_list.Count - 1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count - 1].gps_latitude.ToString()}");
                     }
-                    if (dmodel.emergency == 2)
+
+                }
+                if (dmodel_list[dmodel_list.Count - 1].emergency == 2)
+                {
+                    if (!fall_handled)
                     {
-                        MessageBox.Show($"{usertripped}  GPS_Long: {dmodel.gps_longitude.ToString()} GPS_Lang: {dmodel.gps_latitude.ToString()}");
+                        fall_handled = true;
+                        MessageBox.Show($"{usertripped}  GPS_Long: {dmodel_list[dmodel_list.Count - 1].gps_longitude.ToString()} GPS_Lang: {dmodel_list[dmodel_list.Count - 1].gps_latitude.ToString()}");
                     }
+                }
+                if (dmodel_list[dmodel_list.Count - 1].emergency == 0)
+                {
+                    btn_handled = false;
+                    fall_handled = false;
+                }
             }
 
             SeriesCollection = new SeriesCollection

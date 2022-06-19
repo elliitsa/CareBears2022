@@ -34,7 +34,8 @@ namespace PCApp
         {
             //new instance of UserModel calling LoadUser function in the UserProcessor class with passing the input given by the user
             UserModel user = await UserProcessor.LoadUser(userName, Password);
-            if(txtUsername.Text == userName && txtPassword.Password == Password)
+
+            if (txtUsername.Text == user.username && txtPassword.Password == user.password)
             {
                 if (user.state == "true")
                 {
@@ -55,26 +56,29 @@ namespace PCApp
 
                 }
             }
-            else 
+            else
             {
-                MessageBox.Show("Username and password does not exist or they are wrong!, Please try again...");
+                
             }
 
-            //if user exists
-            
+
             return user;
         }
 
         private async void btn_Login(object sender, RoutedEventArgs e)
         {
-            //creating a new instance of user model
-            UserModel user = new UserModel();
             //creating a task called userTask with a type of UserModel class for passing the credentials: username and password to the LoadUsers function
             Task<UserModel> userTask = LoadUsers(txtUsername.Text, txtPassword.Password);
             //setting the user to await the userTask
-            
-            user = await userTask;
-
+            try
+            {
+                await userTask;
+            }
+            catch
+            {
+                MessageBox.Show("Username and password does not exist or they are wrong!, Please try again...");
+            }
+   
         }
 
         private void btn_Quit(object sender, RoutedEventArgs e)

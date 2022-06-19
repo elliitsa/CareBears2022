@@ -38,6 +38,9 @@ namespace PCApp
                     userTest.id_user = ilist[1].id_user;
                     userTest.state = ilist[0].state;
 
+                    userTest.username = userName;
+                    userTest.password = Password;
+
                     return userTest;
                 }
                 else

@@ -6,7 +6,9 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:PCApp"
         mc:Ignorable="d"
-        Title="LoginScreen" Height="760" Width="450"
+        
+        Title="LoginScreen" Height="760" Width="450" MinWidth="450" MinHeight="760"
+        
         TextElement.Foreground="{DynamicResource MaterialDesignBody}">
 
     <materialDesign:Card UniformCornerRadius="15" Background="{DynamicResource MaterialDesignPaper}" Margin="25">
