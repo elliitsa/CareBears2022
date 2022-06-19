@@ -11,22 +11,39 @@
         Title="RealTimeData" Height="450" Width="800" MinHeight="450" MinWidth="800">
     <Grid>
 
-        <StackPanel  Orientation="Vertical" Margin="125 50 125 50">
-            <TextBlock x:Name="heart_rate" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].heart_rate}" />
-            <TextBlock x:Name="oxygen_level" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].oxygen_level}" />
-            <TextBlock x:Name="gps1" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].gps_longitude}" />
-            <TextBlock x:Name="gps2" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].gps_latitude}" />
-            <TextBlock x:Name="emerg" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].emergency}" />
-            <TextBlock x:Name="date" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].date}" />
-            <TextBlock x:Name="time" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].time}" />
-            <TextBlock x:Name="updateCount" TextAlignment="Center" FontWeight="Bold"  FontStyle="Normal" FontSize="20" Text="{Binding count}" />
-        </StackPanel>
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="50" Height="50*"/>
+            <RowDefinition MinHeight="50" Height="50*"/>
+            <RowDefinition MinHeight="50" Height="50*"/>
+            <RowDefinition MinHeight="50" Height="50*"/>
+            <RowDefinition MinHeight="50" Height="50*"/>
+            <RowDefinition MinHeight="50" Height="50*"/>
+            <RowDefinition MinHeight="50" Height="50*"/>
+            <RowDefinition MinHeight="50" Height="50*"/>
+        </Grid.RowDefinitions>
 
-        <Button Margin="0 0 700 375" x:Name="btnBack" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="25" Width="25*"/>
+            <ColumnDefinition MinWidth="250" Width="100*"/>
+            <ColumnDefinition MinWidth="25" Width="25*"/>
+        </Grid.ColumnDefinitions>
+        
+       
+            <TextBlock Grid.Column="1" Grid.Row="0" x:Name="heart_rate" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].heart_rate}" />
+            <TextBlock Grid.Column="1" Grid.Row="1" x:Name="oxygen_level" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].oxygen_level}" />
+        <TextBlock Grid.Column="1" Grid.Row="2" x:Name="gps1" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].gps_longitude}" />
+        <TextBlock Grid.Column="1" Grid.Row="3" x:Name="gps2" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].gps_latitude}" />
+        <TextBlock Grid.Column="1" Grid.Row="4" x:Name="emerg" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].emergency}" />
+        <TextBlock Grid.Column="1" Grid.Row="5" x:Name="date" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].date}" />
+        <TextBlock Grid.Column="1" Grid.Row="6" x:Name="time" TextAlignment="Center" FontSize="20" Text="{Binding dmodel_list[dmodel_list.Count].time}" />
+        <TextBlock Grid.Column="1" Grid.Row="7" x:Name="updateCount" TextAlignment="Center" FontWeight="Bold"  FontStyle="Normal" FontSize="20" Text="{Binding count}" />
+
+
+        <Button Grid.Column="0" Grid.Row="0" x:Name="btnBack" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
                         materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
                         materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Back" Click="btn_Back"/>
 
-        <Button Margin="700 0 0 375" x:Name="btnLogout" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+        <Button Grid.Column="2" Grid.Row="0" x:Name="btnLogout" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
                         materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
                         materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Logout" Click="btn_Logout"/>
     </Grid>

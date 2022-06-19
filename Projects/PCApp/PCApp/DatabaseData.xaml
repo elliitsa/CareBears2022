@@ -13,10 +13,20 @@
 
     <Grid>
 
-        
-        
+        <Grid.RowDefinitions>
+            <RowDefinition MinHeight="15" Height="15*"/>
+            <RowDefinition MinHeight="100" Height="100*"/>
+            <RowDefinition MinHeight="30" Height="30*"/>
+        </Grid.RowDefinitions>
 
-        <lvc:CartesianChart  x:Name="myLineChart" Series="{Binding SeriesCollection}" LegendLocation="Left" Margin="0 0 0 0" Height="250" Width="550">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition MinWidth="50" Width="50*"/>
+            <ColumnDefinition MinWidth="300" Width="400*"/>
+            <ColumnDefinition MinWidth="50" Width="50*"/>
+        </Grid.ColumnDefinitions>
+
+
+        <lvc:CartesianChart Grid.Row="1" Grid.Column="1" x:Name="myLineChart" Series="{Binding SeriesCollection}" LegendLocation="Left" Height="250" Width="550">
             <lvc:CartesianChart.AxisX>
                 <lvc:Axis x:Name="myLabel" Title="X" Labels="{Binding Labels}"></lvc:Axis>
             </lvc:CartesianChart.AxisX>
@@ -26,14 +36,14 @@
             </lvc:CartesianChart.AxisY>
         </lvc:CartesianChart>
 
-        <DatePicker Name="DatePicker" Width="200" Margin="0, 325, 0, 0" SelectedDateChanged="Date_Picker_SelectedDateChanged" 
+        <DatePicker Grid.Column="1" Grid.Row="3" Name="DatePicker" Width="200" SelectedDateChanged="Date_Picker_SelectedDateChanged" 
                     SelectedDate="{Binding SelectedDate}"></DatePicker>
 
-        <Button Margin="0 0 700 375" x:Name="btnBack" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+        <Button Grid.Column="0" Grid.Row="0" x:Name="btnBack" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
                         materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
                         materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Back" Click="btn_Back"/>
-        
-        <Button Margin="700 0 0 375" x:Name="btnLogout" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
+
+        <Button Grid.Row="0" Grid.Column="2" x:Name="btnLogout" Style="{StaticResource MaterialDesignFlatMidBgButton}" 
                         materialDesign:ShadowAssist.ShadowDepth="Depth0" Height="25" Width="65" 
                         materialDesign:ButtonAssist.CornerRadius="10" FontSize="10" Content="Logout" Click="btn_Logout"/>
     </Grid>
